@@ -14,7 +14,7 @@ app.use(cors({
   default: '*'
 }));
 
-app.get('/historical-data', async (req, res) => {
+app.get('/historical-data', cors(), async (req, res) => {
   const { symbol, startDate, endDate } = req.query;
 
   if (!symbol || !startDate || !endDate) {
@@ -22,7 +22,6 @@ app.get('/historical-data', async (req, res) => {
   }
 
   try {
-    // Convertendo datas para timestamps Unix
     const period1 = Math.floor(new Date(startDate).getTime() / 1000);
     const period2 = Math.floor(new Date(endDate).getTime() / 1000);
 
