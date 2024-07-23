@@ -9,15 +9,11 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-app.use(cors({
-  origin: 'https://main.db36k3o59f71n.amplifyapp.com/',
-  default: 'https://main.db36k3o59f71n.amplifyapp.com/'
-}));
+app.use(cors());
 
 app.all('*', function(req, res, next) {
   console.log(req);
-  const origin = cors.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : cors.default;
-  res.header("Access-Control-Allow-Origin", origin);
+  res.header("Access-Control-Allow-Origin", '*');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
