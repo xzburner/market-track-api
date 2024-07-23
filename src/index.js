@@ -4,19 +4,19 @@ const app = express();
 const port = 3000;
 const cors = require('cors');
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+const allowedOrigins = ['https://main.db36k3o59f71n.amplifyapp.com', 'http://localhost:4200']; // Adicione todas as origens permitidas aqui
+const defaultOrigin = 'https://main.db36k3o59f71n.amplifyapp.com'; // Valor padrão
+
+app.use((req, res, next) => {
+  const origin = allowedOrigins.includes(req.headers.origin) ? req.headers.origin : defaultOrigin;
+  res.header("Access-Control-Allow-Origin", origin);
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
 });
 
 app.use(cors());
 
-app.all('*', function(req, res, next) {
-  console.log(req);
-  res.header("Access-Control-Allow-Origin", '*');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 app.get('/historical-data', cors(), async (req, res) => {
   const { symbol, startDate, endDate } = req.query;
