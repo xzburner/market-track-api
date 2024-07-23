@@ -9,14 +9,9 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-app.use(cors());
-
-app.all('*', function(req, res, next) {
-  const origin = cors.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : cors.default;
-  res.header("Access-Control-Allow-Origin", origin);
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors({
+  origin: '*'
+}));
 
 app.get('/historical-data', async (req, res) => {
   const { symbol, startDate, endDate } = req.query;
