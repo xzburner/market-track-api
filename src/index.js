@@ -2,11 +2,11 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 const port = 3000;
-const cors = require('cors')({origin: true});
+const cors = require('cors');
 
-app.use(cors());
+app.use(cors({ origin: true }));
 
-app.get('/historical-data', cors(), async (req, res) => {
+app.get('/historical-data', async (req, res) => {
   const { symbol, startDate, endDate } = req.query;
 
   if (!symbol || !startDate || !endDate) {
