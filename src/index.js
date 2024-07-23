@@ -2,11 +2,16 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 const port = 3000;
+const cors = require('cors');
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
+app.use(cors({
+  origin: 'https://main.db36k3o59f71n.amplifyapp.com', 
+}));
 
 app.get('/historical-data', async (req, res) => {
   const { symbol, startDate, endDate } = req.query;
