@@ -14,13 +14,6 @@ app.use(cors({
   default: '*'
 }));
 
-app.all('*', function(req, res, next) {
-  const origin = cors.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : cors.default;
-  res.header("Access-Control-Allow-Origin", origin);
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 app.get('/historical-data', async (req, res) => {
   const { symbol, startDate, endDate } = req.query;
 
@@ -45,7 +38,7 @@ app.get('/historical-data', async (req, res) => {
 
     const result = JSON.parse(response.data);
 
-    res.header('Content-Type', 'text/json');
+    res.header('Content-Type', 'application/json');
     res.send(result);
   } catch (error) {
     console.error('Error fetching data', error);
