@@ -9,9 +9,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-app.use(cors({
-  origin: '*'
-}));
+app.use(cors());
 
 app.all('*', function(req, res, next) {
   const origin = cors.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : cors.default;
