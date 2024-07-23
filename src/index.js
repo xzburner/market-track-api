@@ -10,9 +10,17 @@ app.use((err, req, res, next) => {
 });
 
 app.use(cors({
-  origin: '*',
-  default: '*'
+  origin: 'https://main.db36k3o59f71n.amplifyapp.com/',
+  default: 'https://main.db36k3o59f71n.amplifyapp.com/'
 }));
+
+app.all('*', function(req, res, next) {
+  console.log(req);
+  const origin = cors.origin.includes(req.header('origin').toLowerCase()) ? req.headers.origin : cors.default;
+  res.header("Access-Control-Allow-Origin", origin);
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.get('/historical-data', cors(), async (req, res) => {
   const { symbol, startDate, endDate } = req.query;
